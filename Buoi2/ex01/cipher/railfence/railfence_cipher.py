@@ -1,5 +1,5 @@
 class RailFenceCipher:
-    def __init__(self, key):
+    def __init__(self):
         pass
 
     def rail_fence_encrypt(self, plain_text, num_rails):
@@ -13,7 +13,7 @@ class RailFenceCipher:
             elif rail_index == num_rails - 1:
                 direction = -1
             rail_index += direction
-        cipher_text = ''.join(''.join(rail) for rail in rails)
+        cipher_text = ''.join(''.join(r) for r in rail)
         return cipher_text
     
     def rail_fence_decrypt(self, cipher_text, num_rails):
