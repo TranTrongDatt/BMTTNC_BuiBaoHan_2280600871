@@ -15,43 +15,43 @@ class MyApp(QMainWindow):
         url = "http://127.0.0.1:5000/api/caesar/encrypt"
         payload = {
             "plain_text": self.ui.txtPlaintext.toPlainText(),
-            "key": self.ui.txt_Key.text() 
+            "key": self.ui.txt_Key.toPlainText() 
         }
         try:
             response = requests.post(url, json=payload)
             if response.status_code == 200:
                 data = response.json()
-                self.ui.txt_CipherText.setText(data["encrypted_message"])
+                self.ui.txt_CipherText.setPlainText(data["encrypted_message"])
                 
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Information)
                 msg.setText("Encrypted Successfully")
                 msg.exec_()
             else:
-                print("Error while calling API")
+                print("Error while calling API: ", response.status_code)
         except requests.exceptions.RequestException as e:
-            print("Error: %s" % e.message)
+            print("Error: %s" % str(e))
     
     def call_api_decrypt(self):
         url = "http://127.0.0.1:5000/api/caesar/decrypt"
         payload = {
             "cipher_text": self.ui.txt_CipherText.toPlainText(),
-            "key": self.ui.txt_Key.text() 
+            "key": self.ui.txt_Key.toPlainText() 
         }
         try:
             response = requests.post(url, json=payload)
             if response.status_code == 200:
                 data = response.json()
-                self.ui.txtPlaintext.setText(data["decrypted_message"])
+                self.ui.txtPlaintext.setPlainText(data["decrypted_message"])
                 
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Information)
                 msg.setText("Decrypted Successfully")
                 msg.exec_()
             else:
-                print("Error while calling API")
+                print("Error while calling API: ", response.status_code)
         except requests.exceptions.RequestException as e:
-            print("Error: %s" % e.message)
+            print("Error: %s" % str(e))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
